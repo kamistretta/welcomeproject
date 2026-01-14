@@ -70,33 +70,43 @@
         <source src="https://www.soundjay.com/animals/dog-barking-01.mp3" type="audio/mpeg">
     </audio>
 
+    <p id="click-prompt" style="text-align: center; color: #666; font-size: 1.2rem;">🔊 Click anywhere to hear the barks!</p>
+
     <script>
-        // Play barking sounds
+        let barkInterval = null;
+
+        // Play barking sounds using Web Audio API
         function playBark() {
-            const bark = document.getElementById('bark');
-            bark.currentTime = 0;
-            bark.play().catch(() => {
-                // If external audio fails, create simple bark with Web Audio API
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-                oscillator.connect(gainNode);
-                gainNode.connect(audioCtx.destination);
+            // Create a more realistic bark sound
+            for (let i = 0; i < 2; i++) {
+                setTimeout(() => {
+                    const oscillator = audioCtx.createOscillator();
+                    const gainNode = audioCtx.createGain();
 
-                oscillator.frequency.value = 200 + Math.random() * 100;
-                oscillator.type = 'sawtooth';
-                gainNode.gain.value = 0.3;
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioCtx.destination);
 
-                oscillator.start();
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-                oscillator.stop(audioCtx.currentTime + 0.2);
-            });
+                    oscillator.frequency.value = 150 + Math.random() * 100;
+                    oscillator.type = 'sawtooth';
+                    gainNode.gain.value = 0.4;
+
+                    oscillator.start();
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+                    oscillator.stop(audioCtx.currentTime + 0.15);
+                }, i * 100);
+            }
         }
 
-        // Bark every 1-2 seconds
-        playBark();
-        setInterval(playBark, 1500);
+        // Start barking on first click (required by browsers)
+        document.body.addEventListener('click', function startBarking() {
+            document.getElementById('click-prompt').style.display = 'none';
+            playBark();
+            if (!barkInterval) {
+                barkInterval = setInterval(playBark, 1200);
+            }
+        });
     </script>
 </body>
 </html>

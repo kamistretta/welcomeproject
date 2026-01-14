@@ -4,10 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smile!</title>
+    <style>
+        body {
+            background-color: #fffacd;
+            margin: 0;
+            padding: 50px;
+            text-align: center;
+        }
+        .flash-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            font-weight: bold;
+            color: red;
+            text-align: center;
+            animation: flash 0.3s ease-in-out infinite;
+            z-index: 1000;
+        }
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        .dogs {
+            font-size: 4rem;
+            line-height: 1.5;
+            cursor: pointer;
+        }
+        .hint {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+    </style>
 </head>
-<body style="background-color: #fffacd; margin: 0; padding: 50px; text-align: center;">
+<body>
     <h1 style="font-size: 2rem; color: #ff69b4;">You clicked! Here are some dogs to make you smile!</h1>
-    <p style="font-size: 4rem; line-height: 1.5;">
+    <p class="hint">🤫 click for a surprise...</p>
+    <p class="dogs" id="dogs">
         🐶🐕🦮🐕‍🦺🐩🐶🐕🦮🐕‍🦺🐩<br>
         🐕🐶🐩🦮🐕‍🦺🐶🐕🐩🦮🐕‍🦺<br>
         🦮🐕‍🦺🐶🐕🐩🦮🐕‍🦺🐶🐕🐩<br>
@@ -15,5 +52,18 @@
         🐕‍🦺🐩🐶🐕🦮🐕‍🦺🐩🐶🐕🦮
     </p>
     <a href="hello.html" style="color: #ff69b4; font-size: 1.2rem;">← Go back</a>
+
+    <div class="flash-message" id="flash-message">emily smells like stinky butt</div>
+
+    <script>
+        document.getElementById('dogs').addEventListener('click', function() {
+            const flashMsg = document.getElementById('flash-message');
+            flashMsg.style.display = 'block';
+
+            setTimeout(() => {
+                flashMsg.style.display = 'none';
+            }, 3000);
+        });
+    </script>
 </body>
 </html>

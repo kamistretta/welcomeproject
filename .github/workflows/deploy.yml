@@ -1,0 +1,45 @@
+name: Deploy to Lightsail
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install frontend dependencies
+        working-directory: ./jones-county-xc/frontend
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: ./jones-county-xc/frontend
+        run: npm run build
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+      - name: Deploy frontend
+        run: |
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "mkdir -p /tmp/frontend"
+          scp -r ./jones-county-xc/frontend/dist/* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/tmp/frontend/
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "sudo rm -rf /var/www/html/* && sudo mv /tmp/frontend/* /var/www/html/"
+
+      - name: Deploy backend
+        run: |
+          scp -r ./jones-county-xc/backend/* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/ubuntu/backend/
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "cd /home/ubuntu/backend && go build -o server main.go && sudo systemctl restart jones-county-xc"

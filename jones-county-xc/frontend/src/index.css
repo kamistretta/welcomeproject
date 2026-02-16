@@ -1,1 +1,37 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-heading: 'Oswald', sans-serif;
+
+  --color-purple-50: #F3EEFA;
+  --color-purple-100: #E0D0F5;
+  --color-purple-200: #C4A3EB;
+  --color-purple-300: #A474E0;
+  --color-purple-400: #8A4DD6;
+  --color-purple-500: #7030C0;
+  --color-purple-600: #5C1FA3;
+  --color-purple-700: #491885;
+  --color-purple-800: #3A1068;
+  --color-purple-900: #2A0A50;
+  --color-purple-950: #1A0633;
+
+  --color-gold-50: #FFFDE6;
+  --color-gold-100: #FFF8BF;
+  --color-gold-200: #FFF199;
+  --color-gold-300: #FFE566;
+  --color-gold-400: #FFD833;
+  --color-gold-500: #FFCC00;
+  --color-gold-600: #E6B800;
+  --color-gold-700: #CC9F00;
+  --color-gold-800: #997700;
+  --color-gold-900: #665000;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #f8f6fc 0%, #f0edf7 50%, #faf9f0 100%);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

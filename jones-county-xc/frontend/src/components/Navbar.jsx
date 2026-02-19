@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
 const links = [
   { to: '/', label: 'Home' },
@@ -11,6 +12,8 @@ const links = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const { user, logout } = useAuth()
+  const navigate = useNavigate()
 
   const linkClass = ({ isActive }) =>
     `block px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
@@ -18,6 +21,12 @@ export default function Navbar() {
         ? 'bg-purple-700/60 text-gold-300 shadow-sm'
         : 'text-purple-100 hover:bg-purple-800/50 hover:text-white'
     }`
+
+  const handleLogout = () => {
+    logout()
+    navigate('/')
+    setMenuOpen(false)
+  }
 
   return (
     <nav className="sticky top-0 z-50 border-b border-purple-800/50 bg-purple-950/95 shadow-lg backdrop-blur-md">
@@ -28,12 +37,27 @@ export default function Navbar() {
           </NavLink>
 
           {/* Desktop links */}
-          <div className="hidden gap-1 md:flex">
+          <div className="hidden items-center gap-1 md:flex">
             {links.map((link) => (
               <NavLink key={link.to} to={link.to} end={link.to === '/'} className={linkClass}>
                 {link.label}
               </NavLink>
             ))}
+            {user ? (
+              <div className="ml-2 flex items-center gap-2 border-l border-purple-700/50 pl-3">
+                <span className="text-sm font-medium text-gold-300">{user.username}</span>
+                <button
+                  onClick={handleLogout}
+                  className="rounded-lg px-3 py-2 text-sm font-medium text-purple-200 transition-all duration-200 hover:bg-purple-800/50 hover:text-white"
+                >
+                  Log Out
+                </button>
+              </div>
+            ) : (
+              <NavLink to="/login" className={linkClass}>
+                Log In
+              </NavLink>
+            )}
           </div>
 
           {/* Mobile hamburger */}
@@ -74,6 +98,28 @@ export default function Navbar() {
                 {link.label}
               </NavLink>
             ))}
+            {user ? (
+              <>
+                <div className="mx-3 my-2 border-t border-purple-700/50" />
+                <div className="flex items-center justify-between px-3 py-2">
+                  <span className="text-sm font-medium text-gold-300">{user.username}</span>
+                  <button
+                    onClick={handleLogout}
+                    className="rounded-lg px-3 py-1.5 text-sm font-medium text-purple-200 transition-colors hover:bg-purple-800/50 hover:text-white"
+                  >
+                    Log Out
+                  </button>
+                </div>
+              </>
+            ) : (
+              <NavLink
+                to="/login"
+                className={linkClass}
+                onClick={() => setMenuOpen(false)}
+              >
+                Log In
+              </NavLink>
+            )}
           </div>
         </div>
       </div>

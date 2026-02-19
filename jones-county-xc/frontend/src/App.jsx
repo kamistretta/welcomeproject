@@ -6,6 +6,7 @@ import RosterPage from './pages/RosterPage'
 import SchedulePage from './pages/SchedulePage'
 import ResultsPage from './pages/ResultsPage'
 import ContactPage from './pages/ContactPage'
+import LoginPage from './pages/LoginPage'
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/schedule" element={<SchedulePage />} />
           <Route path="/results" element={<ResultsPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </main>
       <Footer />

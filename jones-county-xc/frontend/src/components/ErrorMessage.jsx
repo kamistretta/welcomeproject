@@ -1,13 +1,13 @@
 export default function ErrorMessage({ message, onRetry }) {
   return (
-    <div role="alert" className="mx-auto max-w-md rounded-xl border border-red-200 bg-red-50 p-6 text-center">
-      <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-red-100">
+    <div role="alert" className="mx-auto max-w-md rounded-xl border border-red-500/50 bg-ink-900 p-6 text-center shadow-[0_0_15px_rgba(239,68,68,0.2)]">
+      <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-red-500/10">
         <svg className="h-5 w-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
         </svg>
       </div>
-      <p className="text-base font-semibold text-red-800">Something went wrong</p>
-      <p className="mt-1 text-sm text-red-600">{message}</p>
+      <p className="text-base font-semibold text-red-400">Something went wrong</p>
+      <p className="mt-1 text-sm text-red-300/80">{message}</p>
       {onRetry && (
         <button
           onClick={onRetry}

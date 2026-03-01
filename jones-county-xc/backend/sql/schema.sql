@@ -1,27 +1,32 @@
-CREATE TABLE athletes (
+CREATE TABLE paintings (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    grade INT NOT NULL,
-    personal_record VARCHAR(10),
-    events VARCHAR(255),
+    title VARCHAR(150) NOT NULL,
+    description TEXT,
+    style VARCHAR(50) NOT NULL,
+    medium VARCHAR(100),
+    image_url VARCHAR(500) NOT NULL,
+    size VARCHAR(50),
+    price DECIMAL(10,2),
+    featured BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE meets (
+CREATE TABLE commission_requests (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    date DATE NOT NULL,
-    location VARCHAR(255) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    phone VARCHAR(20),
+    style VARCHAR(50) NOT NULL,
+    description TEXT NOT NULL,
+    special_requests TEXT,
+    status VARCHAR(20) DEFAULT 'new',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE results (
+CREATE TABLE reference_images (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    athlete_id INT NOT NULL,
-    meet_id INT NOT NULL,
-    time VARCHAR(10) NOT NULL,
-    place INT NOT NULL,
+    commission_id INT NOT NULL,
+    image_url VARCHAR(500) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (athlete_id) REFERENCES athletes(id),
-    FOREIGN KEY (meet_id) REFERENCES meets(id)
+    FOREIGN KEY (commission_id) REFERENCES commission_requests(id)
 );

@@ -4,10 +4,9 @@ import { useAuth } from '../context/AuthContext'
 
 const links = [
   { to: '/', label: 'Home' },
-  { to: '/roster', label: 'Roster' },
-  { to: '/schedule', label: 'Schedule' },
-  { to: '/results', label: 'Results' },
-  { to: '/contact', label: 'Contact' },
+  { to: '/gallery', label: 'Gallery' },
+  { to: '/commission', label: 'Commission' },
+  { to: '/about', label: 'About' },
 ]
 
 export default function Navbar() {
@@ -18,8 +17,8 @@ export default function Navbar() {
   const linkClass = ({ isActive }) =>
     `block px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
       isActive
-        ? 'bg-purple-700/60 text-gold-300 shadow-sm'
-        : 'text-purple-100 hover:bg-purple-800/50 hover:text-white'
+        ? 'text-neon-cyan text-glow-cyan'
+        : 'text-ink-200 hover:text-neon-pink hover:bg-ink-800/50'
     }`
 
   const handleLogout = () => {
@@ -29,11 +28,11 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-purple-800/50 bg-purple-950/95 shadow-lg backdrop-blur-md">
+    <nav className="sticky top-0 z-50 border-b border-neon-pink/30 bg-gradient-to-r from-ink-950 via-ink-900 to-ink-950 shadow-lg backdrop-blur-md">
       <div className="mx-auto max-w-6xl px-4">
         <div className="flex h-16 items-center justify-between">
-          <NavLink to="/" className="font-heading text-xl font-bold uppercase tracking-wider text-gold-400 transition-colors hover:text-gold-300">
-            JC Greyhounds XC
+          <NavLink to="/" className="font-heading text-xl font-bold tracking-wide text-rainbow transition-colors">
+            Paintingz By Kat
           </NavLink>
 
           {/* Desktop links */}
@@ -44,11 +43,11 @@ export default function Navbar() {
               </NavLink>
             ))}
             {user ? (
-              <div className="ml-2 flex items-center gap-2 border-l border-purple-700/50 pl-3">
-                <span className="text-sm font-medium text-gold-300">{user.username}</span>
+              <div className="ml-2 flex items-center gap-2 border-l border-ink-700/50 pl-3">
+                <span className="text-sm font-medium text-neon-pink">{user.username}</span>
                 <button
                   onClick={handleLogout}
-                  className="rounded-lg px-3 py-2 text-sm font-medium text-purple-200 transition-all duration-200 hover:bg-purple-800/50 hover:text-white"
+                  className="rounded-lg px-3 py-2 text-sm font-medium text-ink-300 transition-all duration-200 hover:bg-ink-800/50 hover:text-white"
                 >
                   Log Out
                 </button>
@@ -63,7 +62,7 @@ export default function Navbar() {
           {/* Mobile hamburger */}
           <button
             type="button"
-            className="inline-flex items-center justify-center rounded-lg p-2 text-purple-200 transition-colors hover:bg-purple-800/50 hover:text-white md:hidden"
+            className="inline-flex items-center justify-center rounded-lg p-2 text-ink-300 transition-colors hover:bg-ink-800/50 hover:text-neon-cyan md:hidden"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
@@ -100,12 +99,12 @@ export default function Navbar() {
             ))}
             {user ? (
               <>
-                <div className="mx-3 my-2 border-t border-purple-700/50" />
+                <div className="mx-3 my-2 border-t border-ink-700/50" />
                 <div className="flex items-center justify-between px-3 py-2">
-                  <span className="text-sm font-medium text-gold-300">{user.username}</span>
+                  <span className="text-sm font-medium text-neon-pink">{user.username}</span>
                   <button
                     onClick={handleLogout}
-                    className="rounded-lg px-3 py-1.5 text-sm font-medium text-purple-200 transition-colors hover:bg-purple-800/50 hover:text-white"
+                    className="rounded-lg px-3 py-1.5 text-sm font-medium text-ink-300 transition-colors hover:bg-ink-800/50 hover:text-white"
                   >
                     Log Out
                   </button>

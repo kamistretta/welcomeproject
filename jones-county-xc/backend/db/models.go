@@ -6,31 +6,36 @@ package db
 
 import (
 	"database/sql"
-	"time"
 )
 
-type Athlete struct {
-	ID             int32
-	Name           string
-	Grade          int32
-	PersonalRecord sql.NullString
-	Events         sql.NullString
-	CreatedAt      sql.NullTime
+type Painting struct {
+	ID          int32
+	Title       string
+	Description sql.NullString
+	Style       string
+	Medium      sql.NullString
+	ImageUrl    string
+	Size        sql.NullString
+	Price       sql.NullString
+	Featured    bool
+	CreatedAt   sql.NullTime
 }
 
-type Meet struct {
-	ID        int32
-	Name      string
-	Date      time.Time
-	Location  string
-	CreatedAt sql.NullTime
+type CommissionRequest struct {
+	ID              int32
+	Name            string
+	Email           string
+	Phone           sql.NullString
+	Style           string
+	Description     string
+	SpecialRequests sql.NullString
+	Status          sql.NullString
+	CreatedAt       sql.NullTime
 }
 
-type Result struct {
-	ID        int32
-	AthleteID int32
-	MeetID    int32
-	Time      string
-	Place     int32
-	CreatedAt sql.NullTime
+type ReferenceImage struct {
+	ID           int32
+	CommissionID int32
+	ImageUrl     string
+	CreatedAt    sql.NullTime
 }

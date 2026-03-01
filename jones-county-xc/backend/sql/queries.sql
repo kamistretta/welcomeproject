@@ -1,27 +1,35 @@
--- name: GetAllAthletes :many
-SELECT * FROM athletes ORDER BY name;
+-- name: GetAllPaintings :many
+SELECT * FROM paintings ORDER BY created_at DESC;
 
--- name: GetAthleteByID :one
-SELECT * FROM athletes WHERE id = ?;
+-- name: GetPaintingsByStyle :many
+SELECT * FROM paintings WHERE style = ? ORDER BY created_at DESC;
 
--- name: GetAllMeets :many
-SELECT * FROM meets ORDER BY date;
+-- name: GetFeaturedPaintings :many
+SELECT * FROM paintings WHERE featured = TRUE ORDER BY created_at DESC;
 
--- name: GetResultsByMeetID :many
-SELECT r.*, a.name as athlete_name
-FROM results r
-JOIN athletes a ON r.athlete_id = a.id
-WHERE r.meet_id = ?
-ORDER BY r.place;
+-- name: GetPaintingByID :one
+SELECT * FROM paintings WHERE id = ?;
 
--- name: CreateResult :execresult
-INSERT INTO results (athlete_id, meet_id, time, place)
-VALUES (?, ?, ?, ?);
+-- name: CreatePainting :execresult
+INSERT INTO paintings (title, description, style, medium, image_url, size, price, featured)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?);
 
--- name: GetTopTenFastestTimes :many
-SELECT r.time, r.place, a.name as athlete_name, m.name as meet_name, m.date as meet_date
-FROM results r
-JOIN athletes a ON r.athlete_id = a.id
-JOIN meets m ON r.meet_id = m.id
-ORDER BY r.time ASC
-LIMIT 10;
+-- name: DeletePainting :exec
+DELETE FROM paintings WHERE id = ?;
+
+-- name: CreateCommission :execresult
+INSERT INTO commission_requests (name, email, phone, style, description, special_requests)
+VALUES (?, ?, ?, ?, ?, ?);
+
+-- name: GetAllCommissions :many
+SELECT * FROM commission_requests ORDER BY created_at DESC;
+
+-- name: UpdateCommissionStatus :exec
+UPDATE commission_requests SET status = ? WHERE id = ?;
+
+-- name: CreateReferenceImage :execresult
+INSERT INTO reference_images (commission_id, image_url)
+VALUES (?, ?);
+
+-- name: GetReferenceImagesByCommission :many
+SELECT * FROM reference_images WHERE commission_id = ? ORDER BY created_at;

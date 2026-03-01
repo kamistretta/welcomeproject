@@ -8,49 +8,31 @@ package db
 import (
 	"context"
 	"database/sql"
-	"time"
 )
 
-const createResult = `-- name: CreateResult :execresult
-INSERT INTO results (athlete_id, meet_id, time, place)
-VALUES (?, ?, ?, ?)
+const getAllPaintings = `-- name: GetAllPaintings :many
+SELECT id, title, description, style, medium, image_url, size, price, featured, created_at FROM paintings ORDER BY created_at DESC
 `
 
-type CreateResultParams struct {
-	AthleteID int32
-	MeetID    int32
-	Time      string
-	Place     int32
-}
-
-func (q *Queries) CreateResult(ctx context.Context, arg CreateResultParams) (sql.Result, error) {
-	return q.db.ExecContext(ctx, createResult,
-		arg.AthleteID,
-		arg.MeetID,
-		arg.Time,
-		arg.Place,
-	)
-}
-
-const getAllAthletes = `-- name: GetAllAthletes :many
-SELECT id, name, grade, personal_record, events, created_at FROM athletes ORDER BY name
-`
-
-func (q *Queries) GetAllAthletes(ctx context.Context) ([]Athlete, error) {
-	rows, err := q.db.QueryContext(ctx, getAllAthletes)
+func (q *Queries) GetAllPaintings(ctx context.Context) ([]Painting, error) {
+	rows, err := q.db.QueryContext(ctx, getAllPaintings)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Athlete
+	var items []Painting
 	for rows.Next() {
-		var i Athlete
+		var i Painting
 		if err := rows.Scan(
 			&i.ID,
-			&i.Name,
-			&i.Grade,
-			&i.PersonalRecord,
-			&i.Events,
+			&i.Title,
+			&i.Description,
+			&i.Style,
+			&i.Medium,
+			&i.ImageUrl,
+			&i.Size,
+			&i.Price,
+			&i.Featured,
 			&i.CreatedAt,
 		); err != nil {
 			return nil, err
@@ -66,24 +48,29 @@ func (q *Queries) GetAllAthletes(ctx context.Context) ([]Athlete, error) {
 	return items, nil
 }
 
-const getAllMeets = `-- name: GetAllMeets :many
-SELECT id, name, date, location, created_at FROM meets ORDER BY date
+const getPaintingsByStyle = `-- name: GetPaintingsByStyle :many
+SELECT id, title, description, style, medium, image_url, size, price, featured, created_at FROM paintings WHERE style = ? ORDER BY created_at DESC
 `
 
-func (q *Queries) GetAllMeets(ctx context.Context) ([]Meet, error) {
-	rows, err := q.db.QueryContext(ctx, getAllMeets)
+func (q *Queries) GetPaintingsByStyle(ctx context.Context, style string) ([]Painting, error) {
+	rows, err := q.db.QueryContext(ctx, getPaintingsByStyle, style)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []Meet
+	var items []Painting
 	for rows.Next() {
-		var i Meet
+		var i Painting
 		if err := rows.Scan(
 			&i.ID,
-			&i.Name,
-			&i.Date,
-			&i.Location,
+			&i.Title,
+			&i.Description,
+			&i.Style,
+			&i.Medium,
+			&i.ImageUrl,
+			&i.Size,
+			&i.Price,
+			&i.Featured,
 			&i.CreatedAt,
 		); err != nil {
 			return nil, err
@@ -99,59 +86,152 @@ func (q *Queries) GetAllMeets(ctx context.Context) ([]Meet, error) {
 	return items, nil
 }
 
-const getAthleteByID = `-- name: GetAthleteByID :one
-SELECT id, name, grade, personal_record, events, created_at FROM athletes WHERE id = ?
+const getFeaturedPaintings = `-- name: GetFeaturedPaintings :many
+SELECT id, title, description, style, medium, image_url, size, price, featured, created_at FROM paintings WHERE featured = TRUE ORDER BY created_at DESC
 `
 
-func (q *Queries) GetAthleteByID(ctx context.Context, id int32) (Athlete, error) {
-	row := q.db.QueryRowContext(ctx, getAthleteByID, id)
-	var i Athlete
+func (q *Queries) GetFeaturedPaintings(ctx context.Context) ([]Painting, error) {
+	rows, err := q.db.QueryContext(ctx, getFeaturedPaintings)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	var items []Painting
+	for rows.Next() {
+		var i Painting
+		if err := rows.Scan(
+			&i.ID,
+			&i.Title,
+			&i.Description,
+			&i.Style,
+			&i.Medium,
+			&i.ImageUrl,
+			&i.Size,
+			&i.Price,
+			&i.Featured,
+			&i.CreatedAt,
+		); err != nil {
+			return nil, err
+		}
+		items = append(items, i)
+	}
+	if err := rows.Close(); err != nil {
+		return nil, err
+	}
+	if err := rows.Err(); err != nil {
+		return nil, err
+	}
+	return items, nil
+}
+
+const getPaintingByID = `-- name: GetPaintingByID :one
+SELECT id, title, description, style, medium, image_url, size, price, featured, created_at FROM paintings WHERE id = ?
+`
+
+func (q *Queries) GetPaintingByID(ctx context.Context, id int32) (Painting, error) {
+	row := q.db.QueryRowContext(ctx, getPaintingByID, id)
+	var i Painting
 	err := row.Scan(
 		&i.ID,
-		&i.Name,
-		&i.Grade,
-		&i.PersonalRecord,
-		&i.Events,
+		&i.Title,
+		&i.Description,
+		&i.Style,
+		&i.Medium,
+		&i.ImageUrl,
+		&i.Size,
+		&i.Price,
+		&i.Featured,
 		&i.CreatedAt,
 	)
 	return i, err
 }
 
-const getResultsByMeetID = `-- name: GetResultsByMeetID :many
-SELECT r.id, r.athlete_id, r.meet_id, r.time, r.place, r.created_at, a.name as athlete_name
-FROM results r
-JOIN athletes a ON r.athlete_id = a.id
-WHERE r.meet_id = ?
-ORDER BY r.place
+const createPainting = `-- name: CreatePainting :execresult
+INSERT INTO paintings (title, description, style, medium, image_url, size, price, featured)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 `
 
-type GetResultsByMeetIDRow struct {
-	ID          int32
-	AthleteID   int32
-	MeetID      int32
-	Time        string
-	Place       int32
-	CreatedAt   sql.NullTime
-	AthleteName string
+type CreatePaintingParams struct {
+	Title       string
+	Description sql.NullString
+	Style       string
+	Medium      sql.NullString
+	ImageUrl    string
+	Size        sql.NullString
+	Price       sql.NullString
+	Featured    bool
 }
 
-func (q *Queries) GetResultsByMeetID(ctx context.Context, meetID int32) ([]GetResultsByMeetIDRow, error) {
-	rows, err := q.db.QueryContext(ctx, getResultsByMeetID, meetID)
+func (q *Queries) CreatePainting(ctx context.Context, arg CreatePaintingParams) (sql.Result, error) {
+	return q.db.ExecContext(ctx, createPainting,
+		arg.Title,
+		arg.Description,
+		arg.Style,
+		arg.Medium,
+		arg.ImageUrl,
+		arg.Size,
+		arg.Price,
+		arg.Featured,
+	)
+}
+
+const deletePainting = `-- name: DeletePainting :exec
+DELETE FROM paintings WHERE id = ?
+`
+
+func (q *Queries) DeletePainting(ctx context.Context, id int32) error {
+	_, err := q.db.ExecContext(ctx, deletePainting, id)
+	return err
+}
+
+const createCommission = `-- name: CreateCommission :execresult
+INSERT INTO commission_requests (name, email, phone, style, description, special_requests)
+VALUES (?, ?, ?, ?, ?, ?)
+`
+
+type CreateCommissionParams struct {
+	Name            string
+	Email           string
+	Phone           sql.NullString
+	Style           string
+	Description     string
+	SpecialRequests sql.NullString
+}
+
+func (q *Queries) CreateCommission(ctx context.Context, arg CreateCommissionParams) (sql.Result, error) {
+	return q.db.ExecContext(ctx, createCommission,
+		arg.Name,
+		arg.Email,
+		arg.Phone,
+		arg.Style,
+		arg.Description,
+		arg.SpecialRequests,
+	)
+}
+
+const getAllCommissions = `-- name: GetAllCommissions :many
+SELECT id, name, email, phone, style, description, special_requests, status, created_at FROM commission_requests ORDER BY created_at DESC
+`
+
+func (q *Queries) GetAllCommissions(ctx context.Context) ([]CommissionRequest, error) {
+	rows, err := q.db.QueryContext(ctx, getAllCommissions)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []GetResultsByMeetIDRow
+	var items []CommissionRequest
 	for rows.Next() {
-		var i GetResultsByMeetIDRow
+		var i CommissionRequest
 		if err := rows.Scan(
 			&i.ID,
-			&i.AthleteID,
-			&i.MeetID,
-			&i.Time,
-			&i.Place,
+			&i.Name,
+			&i.Email,
+			&i.Phone,
+			&i.Style,
+			&i.Description,
+			&i.SpecialRequests,
+			&i.Status,
 			&i.CreatedAt,
-			&i.AthleteName,
 		); err != nil {
 			return nil, err
 		}
@@ -166,38 +246,55 @@ func (q *Queries) GetResultsByMeetID(ctx context.Context, meetID int32) ([]GetRe
 	return items, nil
 }
 
-const getTopTenFastestTimes = `-- name: GetTopTenFastestTimes :many
-SELECT r.time, r.place, a.name as athlete_name, m.name as meet_name, m.date as meet_date
-FROM results r
-JOIN athletes a ON r.athlete_id = a.id
-JOIN meets m ON r.meet_id = m.id
-ORDER BY r.time ASC
-LIMIT 10
+const updateCommissionStatus = `-- name: UpdateCommissionStatus :exec
+UPDATE commission_requests SET status = ? WHERE id = ?
 `
 
-type GetTopTenFastestTimesRow struct {
-	Time        string
-	Place       int32
-	AthleteName string
-	MeetName    string
-	MeetDate    time.Time
+type UpdateCommissionStatusParams struct {
+	Status sql.NullString
+	ID     int32
 }
 
-func (q *Queries) GetTopTenFastestTimes(ctx context.Context) ([]GetTopTenFastestTimesRow, error) {
-	rows, err := q.db.QueryContext(ctx, getTopTenFastestTimes)
+func (q *Queries) UpdateCommissionStatus(ctx context.Context, arg UpdateCommissionStatusParams) error {
+	_, err := q.db.ExecContext(ctx, updateCommissionStatus, arg.Status, arg.ID)
+	return err
+}
+
+const createReferenceImage = `-- name: CreateReferenceImage :execresult
+INSERT INTO reference_images (commission_id, image_url)
+VALUES (?, ?)
+`
+
+type CreateReferenceImageParams struct {
+	CommissionID int32
+	ImageUrl     string
+}
+
+func (q *Queries) CreateReferenceImage(ctx context.Context, arg CreateReferenceImageParams) (sql.Result, error) {
+	return q.db.ExecContext(ctx, createReferenceImage,
+		arg.CommissionID,
+		arg.ImageUrl,
+	)
+}
+
+const getReferenceImagesByCommission = `-- name: GetReferenceImagesByCommission :many
+SELECT id, commission_id, image_url, created_at FROM reference_images WHERE commission_id = ? ORDER BY created_at
+`
+
+func (q *Queries) GetReferenceImagesByCommission(ctx context.Context, commissionID int32) ([]ReferenceImage, error) {
+	rows, err := q.db.QueryContext(ctx, getReferenceImagesByCommission, commissionID)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	var items []GetTopTenFastestTimesRow
+	var items []ReferenceImage
 	for rows.Next() {
-		var i GetTopTenFastestTimesRow
+		var i ReferenceImage
 		if err := rows.Scan(
-			&i.Time,
-			&i.Place,
-			&i.AthleteName,
-			&i.MeetName,
-			&i.MeetDate,
+			&i.ID,
+			&i.CommissionID,
+			&i.ImageUrl,
+			&i.CreatedAt,
 		); err != nil {
 			return nil, err
 		}

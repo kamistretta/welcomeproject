@@ -3,17 +3,17 @@ import { cva } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400/30 disabled:pointer-events-none disabled:opacity-50 cursor-pointer',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neon-pink/50 disabled:pointer-events-none disabled:opacity-50 cursor-pointer',
   {
     variants: {
       variant: {
-        default: 'bg-purple-700 text-white shadow-sm hover:bg-purple-800',
+        default: 'bg-ink-800 text-white shadow-sm hover:bg-ink-700 hover:shadow-[0_0_15px_rgba(255,16,240,0.2)]',
         destructive: 'bg-red-600 text-white shadow-sm hover:bg-red-700',
-        outline: 'border border-purple-200 bg-white text-purple-700 shadow-sm hover:bg-purple-50 hover:text-purple-800 hover:border-purple-300',
-        secondary: 'bg-purple-100 text-purple-800 shadow-sm hover:bg-purple-200',
-        ghost: 'text-purple-700 hover:bg-purple-50 hover:text-purple-800',
-        link: 'text-purple-700 underline-offset-4 hover:underline',
-        gold: 'bg-gold-500 text-purple-900 shadow-sm hover:bg-gold-400 font-semibold',
+        outline: 'border border-neon-cyan/50 bg-transparent text-neon-cyan shadow-sm hover:bg-neon-cyan/10 hover:border-neon-cyan hover:shadow-[0_0_15px_rgba(0,255,255,0.2)]',
+        secondary: 'bg-ink-800 text-ink-100 shadow-sm hover:bg-ink-700',
+        ghost: 'text-ink-200 hover:bg-ink-800/50 hover:text-white',
+        link: 'text-neon-cyan underline-offset-4 hover:underline',
+        coral: 'bg-coral-500 text-white shadow-sm hover:bg-coral-600 font-semibold box-glow-pink',
       },
       size: {
         default: 'h-10 px-4 py-2',

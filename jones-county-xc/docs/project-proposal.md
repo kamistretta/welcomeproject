@@ -2,15 +2,35 @@
 
 ## Overview
 
-**Paintingz By Kat** is a full-stack artist portfolio and commission management platform. The site showcases paintings across multiple styles and allows visitors to browse the gallery, view individual works, and submit commission requests. An admin login provides authenticated access for managing paintings and commissions.
+**Target Audience:** Art collectors, casual art fans, and potential commission clients looking for custom paintings in styles ranging from nature scenes to pop art and trippy/psychedelic works.
+
+**Problem:** Artists need a dedicated platform to showcase their work and manage commission requests. Generic portfolio builders lack the personality and custom features an artist needs -- style-based filtering, commission intake with reference image support, and a visual identity that matches the art itself.
+
+**Value Proposition:** My app helps art enthusiasts and potential buyers to discover and commission custom artwork by providing a visually striking, filterable gallery and a structured commission intake system that reflects the artist's unique brand.
 
 **Live domain:** katsreallycoolwebproject.online
 
 ---
 
-## Problem Statement
+## Feature Scope
 
-Artists need a dedicated platform to showcase their work and manage commission requests. Generic portfolio builders lack the personality and custom features an artist needs — style-based filtering, commission intake with reference image support, and a visual identity that matches the art itself. This project provides a bespoke solution built around the artist's brand.
+### Must-Have (MVP)
+1. Public gallery with paintings displayed as cards
+2. Style-based filtering (Nature, Pop Art, Trippy, Graphic, Animal Portrait)
+3. Individual painting detail pages with medium, size, and price
+4. Featured paintings section on the homepage
+5. Commission request form with style selection and description
+6. About page with artist biography
+7. Responsive mobile layout
+8. Admin login for managing content
+
+### Deferred
+- Image upload to S3 (currently using URL references)
+- Backend-enforced authentication middleware on admin routes
+- Admin dashboard UI for managing paintings and reviewing commissions
+- Payment integration for direct purchases
+- Email notifications on new commission submissions
+- Password reset flow
 
 ---
 
@@ -151,6 +171,36 @@ Frontend (React SPA)          Backend (Go REST API)          Database (MySQL)
 
 ---
 
+## Navigation Flow
+
+```
+                         +----------+
+                         |  Navbar  |
+                         +----+-----+
+                              |
+          +-------+-------+---+---+----------+--------+
+          |       |       |       |          |        |
+          v       v       v       v          v        v
+       Home   Gallery   About  Commission  Login   Footer
+        /    /gallery   /about /commission /login
+        |       |
+        |       v
+        |   Gallery/:id
+        |   (detail page)
+        v
+   Featured paintings
+   (link to /gallery/:id)
+```
+
+- **Navbar** is persistent across all pages with links to Home, Gallery, About, Commission, and Login
+- **Home** displays featured paintings; clicking a card navigates to `/gallery/:id`
+- **Gallery** lists all paintings with style filter; clicking a card navigates to `/gallery/:id`
+- **Commission** is a standalone form; submitting shows a confirmation message
+- **Login** sets session auth state; logged-in users see their name in the Navbar
+- **Footer** is persistent with branding and Instagram link
+
+---
+
 ## Component Architecture
 
 ```
@@ -237,6 +287,34 @@ GitHub Actions Workflow
 8. **Optimistic Loading** -- TanStack Query provides caching, background refetching, and loading/error states
 9. **Session Auth** -- Client-side session storage authentication for admin access
 10. **Automated Deployment** -- Push-to-deploy via GitHub Actions to AWS Lightsail
+
+---
+
+## AI Review Decisions
+
+### Suggestion: Add backend authentication middleware on admin API routes
+- **Decision:** Deferred
+- **Reason:** The admin endpoints (POST/DELETE paintings, GET commissions) currently have no server-side auth guard. This is important for production but the client-side session auth is sufficient for the MVP. Backend auth will be added in a future iteration.
+
+### Suggestion: Add input validation on the commission form API endpoint
+- **Decision:** Accepted
+- **Reason:** The POST `/api/commissions` endpoint should validate required fields (name, email, style, description) server-side, not just client-side. Without this, invalid data could be written to the database.
+
+### Suggestion: Add pagination to GET /api/paintings
+- **Decision:** Deferred
+- **Reason:** The gallery is unlikely to exceed 50-100 paintings in the near term. Pagination adds complexity that is not needed for the current scale.
+
+### Suggestion: Add a search/text filter to the gallery
+- **Decision:** Rejected
+- **Reason:** The style dropdown filter already provides the primary discovery mechanism. A text search adds scope without clear user need at this stage.
+
+### Suggestion: Add image upload support instead of URL references
+- **Decision:** Deferred
+- **Reason:** S3 integration adds significant infrastructure complexity. URL-based image references work for the MVP since the artist can host images externally.
+
+### Suggestion: Add email notifications when a commission is submitted
+- **Decision:** Deferred
+- **Reason:** Useful for the artist but requires configuring an email service (SES, SendGrid, etc.). The artist can check commissions via the admin API for now.
 
 ---
 

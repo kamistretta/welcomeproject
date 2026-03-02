@@ -8,9 +8,18 @@ export default function AboutPage() {
       </div>
 
       <div className="rounded-2xl border border-ink-700 bg-ink-900 p-6 shadow-sm sm:p-8">
-        <h2 className="font-heading text-2xl font-semibold text-ink-50">Hi, I'm Kat!</h2>
+        <div className="flex flex-col items-center sm:flex-row sm:items-start gap-6 mb-6">
+          <img
+            src="/images/kat-avatar.jpg"
+            alt="Kat the artist"
+            className="h-48 w-48 rounded-2xl border-2 border-neon-pink object-cover shadow-[0_0_20px_rgba(255,16,240,0.3)]"
+          />
+          <div>
+            <h2 className="font-heading text-2xl font-semibold text-ink-50">Hi, I'm Kat!</h2>
+          </div>
+        </div>
 
-        <div className="mt-4 space-y-4 text-ink-200 leading-relaxed">
+        <div className="space-y-4 text-ink-200 leading-relaxed">
           <p>
             I'm a painter who works across a range of styles — from peaceful nature scenes to bold pop art, psychedelic pieces, graphic work, and custom animal portraits.
           </p>

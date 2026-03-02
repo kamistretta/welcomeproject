@@ -16,9 +16,6 @@ export default function PaintingCard({ painting }) {
       <div className="p-4">
         <h3 className="font-heading text-lg font-semibold text-ink-50 group-hover:text-rainbow">{painting.Title}</h3>
         <p className="mt-1 text-sm text-neon-cyan">{painting.Style}</p>
-        {painting.Price?.Valid && (
-          <p className="mt-2 text-sm font-semibold text-neon-lime text-glow-lime">${painting.Price.String}</p>
-        )}
       </div>
     </Link>
   )

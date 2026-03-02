@@ -8,7 +8,6 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/animal-portraits/best-friends.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '150.00', Valid: true },
     Featured: true,
   },
   {
@@ -19,8 +18,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/animal-portraits/best-friends-wip.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '', Valid: false },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 3,
@@ -30,7 +28,6 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/animal-portraits/lucy-in-hoodie.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '175.00', Valid: true },
     Featured: true,
   },
   {
@@ -41,8 +38,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/animal-portraits/lucy-closeup.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '', Valid: false },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 5,
@@ -52,7 +48,6 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/animal-portraits/wine-cat.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '160.00', Valid: true },
     Featured: true,
   },
 
@@ -65,8 +60,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/graphics/colorful-portrait-i.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '200.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 7,
@@ -76,8 +70,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/graphics/colorful-portrait-ii.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '', Valid: false },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 8,
@@ -87,7 +80,6 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/graphics/high-on-life.png',
     Size: { String: '18x24', Valid: true },
-    Price: { String: '185.00', Valid: true },
     Featured: true,
   },
   {
@@ -98,8 +90,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/graphics/billiards.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '175.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 10,
@@ -109,8 +100,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/graphics/call-me.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '165.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 11,
@@ -120,8 +110,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/graphics/revolver.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '170.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 12,
@@ -131,8 +120,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/graphics/dr-feelgood.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '155.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 13,
@@ -142,8 +130,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/graphics/gunna.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '180.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 14,
@@ -153,8 +140,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/graphics/nikes.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '145.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 15,
@@ -164,7 +150,6 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/graphics/purple-haze.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '190.00', Valid: true },
     Featured: true,
   },
 
@@ -177,7 +162,6 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/nature/mountain-lake.png',
     Size: { String: '18x24', Valid: true },
-    Price: { String: '200.00', Valid: true },
     Featured: true,
   },
   {
@@ -188,8 +172,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/nature/mountain-lake-ii.png',
     Size: { String: '18x24', Valid: true },
-    Price: { String: '', Valid: false },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 18,
@@ -199,8 +182,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/nature/red-barn-sunset.png',
     Size: { String: '18x24', Valid: true },
-    Price: { String: '175.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 19,
@@ -210,8 +192,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/nature/classic-cars.png',
     Size: { String: '18x24', Valid: true },
-    Price: { String: '195.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 20,
@@ -221,8 +202,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/nature/snow-peak.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '165.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 21,
@@ -232,7 +212,6 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/nature/mountain-sunset.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '180.00', Valid: true },
     Featured: true,
   },
   {
@@ -243,8 +222,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/nature/night-shore.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '155.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 23,
@@ -254,8 +232,7 @@ const paintings = [
     Medium: { String: 'Watercolor on Paper', Valid: true },
     ImageUrl: '/images/nature/koi-pond.png',
     Size: { String: '12x16', Valid: true },
-    Price: { String: '120.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 24,
@@ -265,8 +242,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/nature/skier.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '160.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 25,
@@ -276,8 +252,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/nature/blue-sky-birds.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '140.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 26,
@@ -287,8 +262,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/nature/galaxy-treeline.png',
     Size: { String: '16x16', Valid: true },
-    Price: { String: '150.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 27,
@@ -298,8 +272,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/nature/starry-mountains.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '155.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
 
   // ── Pop Art ────────────────────────────────────────
@@ -311,8 +284,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/pop-art/colorful-portrait-iii.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '200.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 29,
@@ -322,8 +294,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/pop-art/colorful-portrait-iv.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '', Valid: false },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 30,
@@ -333,7 +304,6 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/pop-art/purple-tears.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '185.00', Valid: true },
     Featured: true,
   },
   {
@@ -344,7 +314,6 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/pop-art/the-kiss.png',
     Size: { String: '18x24', Valid: true },
-    Price: { String: '210.00', Valid: true },
     Featured: true,
   },
   {
@@ -355,8 +324,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/pop-art/sky-kicks.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '165.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 33,
@@ -366,8 +334,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/pop-art/abstract-shapes.png',
     Size: { String: '18x24', Valid: true },
-    Price: { String: '175.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 34,
@@ -377,8 +344,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/pop-art/golden-glow.png',
     Size: { String: '12x16', Valid: true },
-    Price: { String: '130.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 35,
@@ -388,8 +354,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/pop-art/late-night.png',
     Size: { String: '18x24', Valid: true },
-    Price: { String: '220.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
 
   // ── Trippy ─────────────────────────────────────────
@@ -401,7 +366,6 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/trippy/neon-skeleton.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '175.00', Valid: true },
     Featured: true,
   },
   {
@@ -412,8 +376,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/trippy/tame-impala-i.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '165.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 38,
@@ -423,8 +386,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/trippy/tame-impala-ii.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '', Valid: false },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 39,
@@ -434,8 +396,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/trippy/neon-embrace.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '155.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 40,
@@ -445,8 +406,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/trippy/dragonfly-kiss.png',
     Size: { String: '12x16', Valid: true },
-    Price: { String: '135.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 41,
@@ -456,8 +416,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/trippy/moonlit-mystic.png',
     Size: { String: '18x24', Valid: true },
-    Price: { String: '195.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 42,
@@ -467,8 +426,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/trippy/violet-silence.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '170.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 43,
@@ -478,7 +436,6 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/trippy/cosmic-reach.png',
     Size: { String: '18x24', Valid: true },
-    Price: { String: '200.00', Valid: true },
     Featured: true,
   },
   {
@@ -489,7 +446,6 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/trippy/neon-kiss.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '185.00', Valid: true },
     Featured: true,
   },
   {
@@ -500,8 +456,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/trippy/midnight-garden.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '175.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 46,
@@ -511,8 +466,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/trippy/smoking-skeleton.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '170.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 47,
@@ -522,8 +476,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/trippy/headless-figure.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '160.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 48,
@@ -533,7 +486,6 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/trippy/cosmic-astronaut.png',
     Size: { String: '18x24', Valid: true },
-    Price: { String: '225.00', Valid: true },
     Featured: true,
   },
   {
@@ -544,8 +496,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/trippy/skeleton-embrace.png',
     Size: { String: '12x16', Valid: true },
-    Price: { String: '130.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 50,
@@ -555,8 +506,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/trippy/celestial-gaze.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '185.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 51,
@@ -566,8 +516,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/trippy/cosmic-creator.png',
     Size: { String: '18x24', Valid: true },
-    Price: { String: '210.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 52,
@@ -577,8 +526,7 @@ const paintings = [
     Medium: { String: 'Colored Pencil on Paper', Valid: true },
     ImageUrl: '/images/trippy/alien-jungle.png',
     Size: { String: '12x16', Valid: true },
-    Price: { String: '140.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 53,
@@ -588,8 +536,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/trippy/enchanted-mushrooms.png',
     Size: { String: '12x16', Valid: true },
-    Price: { String: '125.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 54,
@@ -599,8 +546,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/trippy/rainbow-mushroom.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '175.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 55,
@@ -610,8 +556,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/trippy/celestial-bubbles.png',
     Size: { String: '12x16', Valid: true },
-    Price: { String: '135.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
   {
     ID: 56,
@@ -621,8 +566,7 @@ const paintings = [
     Medium: { String: 'Acrylic on Canvas', Valid: true },
     ImageUrl: '/images/trippy/divine-lotus.png',
     Size: { String: '16x20', Valid: true },
-    Price: { String: '190.00', Valid: true },
-    Featured: false,
+    Featured: true,
   },
 ]
 

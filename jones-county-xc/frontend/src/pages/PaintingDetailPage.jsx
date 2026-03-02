@@ -62,12 +62,6 @@ export default function PaintingDetailPage() {
                 <span className="text-ink-100">{painting.Size.String}</span>
               </div>
             )}
-            {painting.Price?.Valid && (
-              <div className="flex items-center gap-3 text-sm">
-                <span className="font-medium text-ink-300">Price</span>
-                <span className="text-lg font-bold text-neon-lime text-glow-lime">${painting.Price.String}</span>
-              </div>
-            )}
           </div>
 
           <Link

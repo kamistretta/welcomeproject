@@ -1,23 +1,21 @@
 import { useParams, Link } from 'react-router-dom'
-import { useQuery } from '@tanstack/react-query'
-import LoadingSpinner from '../components/LoadingSpinner'
-import ErrorMessage from '../components/ErrorMessage'
+import { getPaintingById } from '../data/paintings'
 
 export default function PaintingDetailPage() {
   const { id } = useParams()
+  const painting = getPaintingById(id)
 
-  const { data: painting, isLoading, isError, error, refetch } = useQuery({
-    queryKey: ['painting', id],
-    queryFn: async () => {
-      const res = await fetch(`/api/paintings/${id}`)
-      if (!res.ok) throw new Error('Failed to fetch painting')
-      return res.json()
-    },
-  })
-
-  if (isLoading) return <LoadingSpinner message="Loading painting..." />
-  if (isError) return <div className="py-12"><ErrorMessage message={error.message} onRetry={refetch} /></div>
-  if (!painting) return null
+  if (!painting) {
+    return (
+      <div className="mx-auto max-w-5xl px-4 py-12 text-center">
+        <h1 className="font-heading text-2xl font-bold text-ink-50">Painting Not Found</h1>
+        <p className="mt-2 text-ink-400">The painting you're looking for doesn't exist.</p>
+        <Link to="/gallery" className="mt-6 inline-flex items-center gap-1 text-sm font-medium text-neon-cyan transition-colors hover:text-neon-cyan/80 text-glow-cyan">
+          Back to Gallery
+        </Link>
+      </div>
+    )
+  }
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12">
@@ -47,24 +45,24 @@ export default function PaintingDetailPage() {
             {painting.Title}
           </h1>
 
-          {painting.Description?.String && (
+          {painting.Description?.Valid && (
             <p className="mt-4 text-ink-200 leading-relaxed">{painting.Description.String}</p>
           )}
 
           <div className="mt-6 space-y-3">
-            {painting.Medium?.String && (
+            {painting.Medium?.Valid && (
               <div className="flex items-center gap-3 text-sm">
                 <span className="font-medium text-ink-300">Medium</span>
                 <span className="text-ink-100">{painting.Medium.String}</span>
               </div>
             )}
-            {painting.Size?.String && (
+            {painting.Size?.Valid && (
               <div className="flex items-center gap-3 text-sm">
                 <span className="font-medium text-ink-300">Size</span>
                 <span className="text-ink-100">{painting.Size.String}</span>
               </div>
             )}
-            {painting.Price?.String && (
+            {painting.Price?.Valid && (
               <div className="flex items-center gap-3 text-sm">
                 <span className="font-medium text-ink-300">Price</span>
                 <span className="text-lg font-bold text-neon-lime text-glow-lime">${painting.Price.String}</span>

@@ -24,12 +24,12 @@ export default function AboutPage() {
 
         <div className="mt-8 flex flex-wrap gap-4">
           <a
-            href="https://instagram.com/paintingsbykat"
+            href="https://instagram.com/paintingzbykat"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-lg border border-neon-cyan/50 bg-transparent px-5 py-2.5 text-sm font-semibold text-neon-cyan transition-all hover:bg-neon-cyan/10 hover:border-neon-cyan hover:shadow-[0_0_15px_rgba(0,255,255,0.2)]"
           >
-            Follow @paintingsbykat
+            Follow @paintingzbykat
           </a>
           <Link
             to="/commission"

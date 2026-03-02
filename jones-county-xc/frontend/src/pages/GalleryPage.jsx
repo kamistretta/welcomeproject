@@ -1,23 +1,13 @@
 import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
 import PaintingCard from '../components/PaintingCard'
-import LoadingSpinner from '../components/LoadingSpinner'
-import ErrorMessage from '../components/ErrorMessage'
+import { getPaintingsByStyle } from '../data/paintings'
 
 const STYLES = ['All', 'Nature', 'Pop Art', 'Trippy', 'Graphic', 'Animal Portrait']
 
 export default function GalleryPage() {
   const [activeStyle, setActiveStyle] = useState('All')
 
-  const { data: paintings, isLoading, isError, error, refetch } = useQuery({
-    queryKey: ['paintings', activeStyle],
-    queryFn: async () => {
-      const url = activeStyle === 'All' ? '/api/paintings' : `/api/paintings?style=${encodeURIComponent(activeStyle)}`
-      const res = await fetch(url)
-      if (!res.ok) throw new Error('Failed to fetch paintings')
-      return res.json()
-    },
-  })
+  const paintings = getPaintingsByStyle(activeStyle)
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
@@ -43,10 +33,7 @@ export default function GalleryPage() {
         ))}
       </div>
 
-      {isLoading && <LoadingSpinner message="Loading paintings..." />}
-      {isError && <ErrorMessage message={error.message} onRetry={refetch} />}
-
-      {paintings && paintings.length > 0 && (
+      {paintings.length > 0 && (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {paintings.map((painting) => (
             <PaintingCard key={painting.ID} painting={painting} />
@@ -54,7 +41,7 @@ export default function GalleryPage() {
         </div>
       )}
 
-      {paintings && paintings.length === 0 && (
+      {paintings.length === 0 && (
         <p className="py-12 text-center text-ink-400">
           {activeStyle === 'All'
             ? 'No paintings in the gallery yet.'

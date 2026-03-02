@@ -8,7 +8,7 @@
 | `/gallery` | GalleryPage | Full painting catalog with a style dropdown filter (All, Nature, Pop Art, Trippy, Graphic, Animal Portrait) |
 | `/gallery/:id` | PaintingDetailPage | Single painting view showing title, description, medium, size, and price |
 | `/commission` | CommissionPage | Commission request form with fields for name, email, phone, style, description, and special requests |
-| `/about` | AboutPage | Artist biography, photo, and social media links (@paintingsbykat) |
+| `/about` | AboutPage | Artist biography, photo, and social media links (@paintingzbykat) |
 | `/login` | LoginPage | Session-based admin login form |
 
 ## Navigation Flow

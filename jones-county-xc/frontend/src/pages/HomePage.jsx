@@ -1,17 +1,9 @@
-import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import PaintingCard from '../components/PaintingCard'
-import LoadingSpinner from '../components/LoadingSpinner'
+import { getFeaturedPaintings } from '../data/paintings'
 
 export default function HomePage() {
-  const { data: featured, isLoading } = useQuery({
-    queryKey: ['paintings', 'featured'],
-    queryFn: async () => {
-      const res = await fetch('/api/paintings/featured')
-      if (!res.ok) throw new Error('Failed to fetch featured paintings')
-      return res.json()
-    },
-  })
+  const featured = getFeaturedPaintings()
 
   return (
     <div>
@@ -50,9 +42,7 @@ export default function HomePage() {
       <section className="mx-auto max-w-6xl px-4 py-16">
         <h2 className="font-heading text-2xl font-bold text-rainbow mb-8">Featured Work</h2>
 
-        {isLoading && <LoadingSpinner message="Loading artwork..." />}
-
-        {featured && featured.length > 0 && (
+        {featured.length > 0 && (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {featured.map((painting) => (
               <PaintingCard key={painting.ID} painting={painting} />
@@ -60,7 +50,7 @@ export default function HomePage() {
           </div>
         )}
 
-        {featured && featured.length === 0 && (
+        {featured.length === 0 && (
           <p className="text-center text-ink-400 py-12">Featured paintings coming soon.</p>
         )}
 

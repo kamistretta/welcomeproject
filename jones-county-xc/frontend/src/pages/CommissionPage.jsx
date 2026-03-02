@@ -47,7 +47,7 @@ export default function CommissionPage() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
         </div>
-        <h2 className="font-heading text-2xl font-bold text-rainbow">Request Submitted!</h2>
+        <h2 className="text-2xl font-bold text-rainbow">Request Submitted!</h2>
         <p className="mt-3 text-ink-200">
           Thank you for your interest! I'll get back to you within <span className="font-semibold text-neon-pink text-glow-pink">2-3 business days</span> to discuss your commission.
         </p>
@@ -58,7 +58,7 @@ export default function CommissionPage() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-12">
       <div className="mb-8">
-        <h1 className="font-heading text-3xl font-bold text-rainbow">Request a Commission</h1>
+        <h1 className="text-3xl font-bold text-rainbow">Request a Commission</h1>
         <p className="mt-2 text-ink-300">Tell me about the painting you'd like and I'll get back to you within 2-3 business days.</p>
       </div>
 

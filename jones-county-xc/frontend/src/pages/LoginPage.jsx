@@ -32,7 +32,7 @@ export default function LoginPage() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h1 className="font-heading text-2xl font-bold text-rainbow">Welcome, {user.username}!</h1>
+          <h1 className="text-2xl font-bold text-rainbow">Welcome, {user.username}!</h1>
           <p className="mt-2 text-sm text-ink-300">You are logged in.</p>
           <button
             onClick={() => logout()}
@@ -54,7 +54,7 @@ export default function LoginPage() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
             </svg>
           </div>
-          <h1 className="font-heading text-2xl font-bold text-rainbow">Log In</h1>
+          <h1 className="text-2xl font-bold text-rainbow">Log In</h1>
           <p className="mt-1 text-sm text-ink-300">Sign in to manage your portfolio</p>
         </div>
 

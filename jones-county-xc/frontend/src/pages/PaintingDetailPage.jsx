@@ -8,7 +8,7 @@ export default function PaintingDetailPage() {
   if (!painting) {
     return (
       <div className="mx-auto max-w-5xl px-4 py-12 text-center">
-        <h1 className="font-heading text-2xl font-bold text-ink-50">Painting Not Found</h1>
+        <h1 className="text-2xl font-bold text-ink-50">Painting Not Found</h1>
         <p className="mt-2 text-ink-400">The painting you're looking for doesn't exist.</p>
         <Link to="/gallery" className="mt-6 inline-flex items-center gap-1 text-sm font-medium text-neon-cyan transition-colors hover:text-neon-cyan/80 text-glow-cyan">
           Back to Gallery
@@ -41,7 +41,7 @@ export default function PaintingDetailPage() {
           <span className="inline-block w-fit rounded-full border border-neon-cyan/30 bg-ink-800 px-3 py-1 text-xs font-semibold text-neon-cyan">
             {painting.Style}
           </span>
-          <h1 className="mt-3 font-heading text-3xl font-bold text-rainbow sm:text-4xl">
+          <h1 className="mt-3 text-3xl font-bold text-rainbow sm:text-4xl">
             {painting.Title}
           </h1>
 

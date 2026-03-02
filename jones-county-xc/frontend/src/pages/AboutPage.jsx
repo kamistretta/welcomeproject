@@ -4,7 +4,7 @@ export default function AboutPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
       <div className="mb-8">
-        <h1 className="font-heading text-3xl font-bold text-rainbow">About the Artist</h1>
+        <h1 className="text-3xl font-bold text-rainbow">About the Artist</h1>
       </div>
 
       <div className="rounded-2xl border border-ink-700 bg-ink-900 p-6 shadow-sm sm:p-8">
@@ -15,7 +15,7 @@ export default function AboutPage() {
             className="h-48 w-48 rounded-2xl border-2 border-neon-pink object-cover shadow-[0_0_20px_rgba(255,16,240,0.3)]"
           />
           <div>
-            <h2 className="font-heading text-2xl font-semibold text-ink-50">Hi, I'm Kat!</h2>
+            <h2 className="text-2xl font-semibold text-ink-50">Hi, I'm Kat!</h2>
           </div>
         </div>
 

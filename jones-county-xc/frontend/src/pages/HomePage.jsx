@@ -40,7 +40,7 @@ export default function HomePage() {
 
       {/* Featured Work */}
       <section className="mx-auto max-w-6xl px-4 py-16">
-        <h2 className="font-heading text-2xl font-bold text-rainbow mb-8">Featured Work</h2>
+        <h2 className="text-2xl font-bold text-rainbow mb-8">Featured Work</h2>
 
         {featured.length > 0 && (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

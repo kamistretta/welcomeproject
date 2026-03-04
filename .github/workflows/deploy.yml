@@ -53,3 +53,8 @@ jobs:
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "sudo systemctl stop jones-county-xc || true"
           scp ./katz-paintings/backend/server ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/ubuntu/backend/
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "sudo systemctl start jones-county-xc"
+
+      - name: Setup database and Nginx proxy
+        run: |
+          scp ./katz-paintings/backend/setup-server.sh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/tmp/setup-server.sh
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "bash /tmp/setup-server.sh"

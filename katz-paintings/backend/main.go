@@ -133,13 +133,27 @@ func deletePainting(c *gin.Context) {
 }
 
 func createCommission(c *gin.Context) {
-	var input db.CreateCommissionParams
+	var input struct {
+		Name            string `json:"name" binding:"required"`
+		Email           string `json:"email" binding:"required"`
+		Phone           string `json:"phone"`
+		Style           string `json:"style" binding:"required"`
+		Description     string `json:"description" binding:"required"`
+		SpecialRequests string `json:"special_requests"`
+	}
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	result, err := queries.CreateCommission(c.Request.Context(), input)
+	result, err := queries.CreateCommission(c.Request.Context(), db.CreateCommissionParams{
+		Name:            input.Name,
+		Email:           input.Email,
+		Phone:           sql.NullString{String: input.Phone, Valid: input.Phone != ""},
+		Style:           input.Style,
+		Description:     input.Description,
+		SpecialRequests: sql.NullString{String: input.SpecialRequests, Valid: input.SpecialRequests != ""},
+	})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

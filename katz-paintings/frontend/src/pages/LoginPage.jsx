@@ -15,9 +15,9 @@ export default function LoginPage() {
     e.preventDefault()
     setError('')
 
-    if (username === 'TestUser' && password === '12345') {
+    if (username === 'KatMistretta' && password === 'deal!65N') {
       login(username)
-      navigate('/')
+      navigate('/admin/commissions')
     } else {
       setError('Invalid username or password.')
     }

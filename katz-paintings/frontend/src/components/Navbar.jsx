@@ -42,9 +42,11 @@ export default function Navbar() {
                 {link.label}
               </NavLink>
             ))}
-            {user ? (
+            {user && (
               <div className="ml-2 flex items-center gap-2 border-l border-ink-700/50 pl-3">
-                <span className="text-sm font-medium text-neon-pink">{user.username}</span>
+                <NavLink to="/admin/commissions" className={linkClass}>
+                  Requests
+                </NavLink>
                 <button
                   onClick={handleLogout}
                   className="rounded-lg px-3 py-2 text-sm font-medium text-ink-300 transition-all duration-200 hover:bg-ink-800/50 hover:text-white"
@@ -52,10 +54,6 @@ export default function Navbar() {
                   Log Out
                 </button>
               </div>
-            ) : (
-              <NavLink to="/login" className={linkClass}>
-                Log In
-              </NavLink>
             )}
           </div>
 
@@ -97,11 +95,17 @@ export default function Navbar() {
                 {link.label}
               </NavLink>
             ))}
-            {user ? (
+            {user && (
               <>
                 <div className="mx-3 my-2 border-t border-ink-700/50" />
+                <NavLink
+                  to="/admin/commissions"
+                  className={linkClass}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Requests
+                </NavLink>
                 <div className="flex items-center justify-between px-3 py-2">
-                  <span className="text-sm font-medium text-neon-pink">{user.username}</span>
                   <button
                     onClick={handleLogout}
                     className="rounded-lg px-3 py-1.5 text-sm font-medium text-ink-300 transition-colors hover:bg-ink-800/50 hover:text-white"
@@ -110,14 +114,6 @@ export default function Navbar() {
                   </button>
                 </div>
               </>
-            ) : (
-              <NavLink
-                to="/login"
-                className={linkClass}
-                onClick={() => setMenuOpen(false)}
-              >
-                Log In
-              </NavLink>
             )}
           </div>
         </div>

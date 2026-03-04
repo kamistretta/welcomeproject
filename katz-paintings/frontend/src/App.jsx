@@ -7,6 +7,7 @@ import PaintingDetailPage from './pages/PaintingDetailPage'
 import CommissionPage from './pages/CommissionPage'
 import AboutPage from './pages/AboutPage'
 import LoginPage from './pages/LoginPage'
+import AdminCommissionsPage from './pages/AdminCommissionsPage'
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
           <Route path="/commission" element={<CommissionPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/admin/commissions" element={<AdminCommissionsPage />} />
         </Routes>
       </main>
       <Footer />

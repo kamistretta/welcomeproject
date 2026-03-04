@@ -1,4 +1,4 @@
-module jones-county-xc
+module katz-paintings
 
 go 1.25.6
 

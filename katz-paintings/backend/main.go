@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"jones-county-xc/db"
+	"katz-paintings/db"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"

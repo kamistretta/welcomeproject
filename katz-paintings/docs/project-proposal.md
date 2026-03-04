@@ -270,7 +270,7 @@ GitHub Actions Workflow
       +-- Deploy frontend -> /var/www/html/
       +-- Deploy backend  -> /home/ubuntu/backend/
       +-- go build -o server main.go
-      +-- sudo systemctl restart jones-county-xc
+      +-- sudo systemctl restart katz-paintings
 ```
 
 ---

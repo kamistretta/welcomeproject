@@ -81,7 +81,7 @@ commission_requests  1 --- * reference_images
 After modifying `schema.sql` or `queries.sql`:
 
 ```bash
-cd jones-county-xc/backend
+cd katz-paintings/backend
 sqlc generate
 ```
 

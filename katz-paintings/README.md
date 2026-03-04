@@ -25,7 +25,7 @@ A full-stack artist portfolio and commission platform. Browse paintings across m
 ## Project Structure
 
 ```
-jones-county-xc/
+katz-paintings/
 ├── frontend/    # React SPA
 ├── backend/     # Go REST API
 └── docs/        # Project documentation
@@ -42,7 +42,7 @@ jones-county-xc/
 ### Frontend
 
 ```bash
-cd jones-county-xc/frontend
+cd katz-paintings/frontend
 npm install
 npm run dev
 ```
@@ -52,7 +52,7 @@ The app runs at http://localhost:5173. API calls are proxied to the production b
 ### Backend
 
 ```bash
-cd jones-county-xc/backend
+cd katz-paintings/backend
 go run main.go
 ```
 
@@ -62,7 +62,7 @@ The API runs at http://localhost:8080. Requires a MySQL database named `jones_co
 
 ```bash
 mysql -u root -p -e "CREATE DATABASE jones_county_xc;"
-mysql -u root -p jones_county_xc < jones-county-xc/backend/sql/schema.sql
+mysql -u root -p jones_county_xc < katz-paintings/backend/sql/schema.sql
 ```
 
 ## API Endpoints

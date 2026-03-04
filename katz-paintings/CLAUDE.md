@@ -9,7 +9,7 @@ An artist portfolio and commission management platform for Kat. Visitors browse 
 ## Folder Structure
 
 ```
-jones-county-xc/
+katz-paintings/
 ├── frontend/          # React SPA (Vite + Tailwind CSS)
 │   ├── src/
 │   │   ├── pages/          # Route-level page components
@@ -40,7 +40,7 @@ jones-county-xc/
 
 ### Frontend
 ```bash
-cd jones-county-xc/frontend
+cd katz-paintings/frontend
 npm install
 npm run dev
 # Runs at http://localhost:5173
@@ -49,7 +49,7 @@ npm run dev
 
 ### Backend
 ```bash
-cd jones-county-xc/backend
+cd katz-paintings/backend
 go run main.go
 # Runs at http://localhost:8080
 # Requires MySQL with database jones_county_xc

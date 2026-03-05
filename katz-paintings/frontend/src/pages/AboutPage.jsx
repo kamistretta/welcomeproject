@@ -21,13 +21,13 @@ export default function AboutPage() {
 
         <div className="space-y-4 text-ink-200 leading-relaxed">
           <p>
-            I'm a painter who works across a range of styles — from peaceful nature scenes to bold pop art, psychedelic pieces, graphic work, and custom animal portraits.
+            Hi, I'm Kat! I'm currently finishing up my Master's in Information Systems, and I actually built this website for one of my final classes. But painting has always been my real passion.
           </p>
           <p>
-            Every painting starts with a connection to the subject. Whether it's capturing the personality of someone's pet or exploring color and texture in an abstract piece, I pour myself into each canvas.
+            I love to paint anything that brings people happiness — whether that's a portrait of your pet, a trippy psychedelic piece, a chill nature scene, or something totally custom. If it makes you smile, I want to paint it.
           </p>
           <p>
-            If you're interested in a custom piece, I'd love to hear from you. Head over to my commission page and tell me what you have in mind!
+            If you have something in mind, I'd love to hear about it! Head over to my commission page and tell me what you're thinking.
           </p>
         </div>
 

@@ -36,6 +36,15 @@ CREATE TABLE IF NOT EXISTS reference_images (
 SQL
 echo "Database tables verified"
 
+# Seed paintings if table is empty
+PAINTING_COUNT=$(mysql -u xc_app -pxc_password jones_county_xc -N -e "SELECT COUNT(*) FROM paintings;" 2>/dev/null || echo "0")
+if [ "$PAINTING_COUNT" -eq 0 ]; then
+    mysql -u xc_app -pxc_password jones_county_xc < /home/ubuntu/backend/seed.sql
+    echo "Seeded $( mysql -u xc_app -pxc_password jones_county_xc -N -e 'SELECT COUNT(*) FROM paintings;' ) paintings"
+else
+    echo "Paintings table already has $PAINTING_COUNT rows, skipping seed"
+fi
+
 # Find the active Nginx config file
 NGINX_CONF=""
 for f in /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default; do

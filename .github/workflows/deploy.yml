@@ -57,4 +57,5 @@ jobs:
       - name: Setup database and Nginx proxy
         run: |
           scp ./katz-paintings/backend/setup-server.sh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/tmp/setup-server.sh
+          scp ./katz-paintings/backend/sql/seed.sql ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/ubuntu/backend/seed.sql
           ssh ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "bash /tmp/setup-server.sh"

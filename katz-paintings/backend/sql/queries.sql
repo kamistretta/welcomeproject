@@ -14,6 +14,9 @@ SELECT * FROM paintings WHERE id = ?;
 INSERT INTO paintings (title, description, style, medium, image_url, size, price, featured)
 VALUES (?, ?, ?, ?, ?, ?, ?, ?);
 
+-- name: UpdatePainting :exec
+UPDATE paintings SET title = ?, description = ?, style = ?, medium = ?, size = ? WHERE id = ?;
+
 -- name: DeletePainting :exec
 DELETE FROM paintings WHERE id = ?;
 

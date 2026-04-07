@@ -175,6 +175,31 @@ func (q *Queries) CreatePainting(ctx context.Context, arg CreatePaintingParams) 
 	)
 }
 
+const updatePainting = `-- name: UpdatePainting :exec
+UPDATE paintings SET title = ?, description = ?, style = ?, medium = ?, size = ? WHERE id = ?
+`
+
+type UpdatePaintingParams struct {
+	Title       string
+	Description sql.NullString
+	Style       string
+	Medium      sql.NullString
+	Size        sql.NullString
+	ID          int32
+}
+
+func (q *Queries) UpdatePainting(ctx context.Context, arg UpdatePaintingParams) error {
+	_, err := q.db.ExecContext(ctx, updatePainting,
+		arg.Title,
+		arg.Description,
+		arg.Style,
+		arg.Medium,
+		arg.Size,
+		arg.ID,
+	)
+	return err
+}
+
 const deletePainting = `-- name: DeletePainting :exec
 DELETE FROM paintings WHERE id = ?
 `

@@ -45,6 +45,7 @@ func main() {
 	r.GET("/api/paintings/featured", getFeaturedPaintings)
 	r.GET("/api/paintings/:id", getPaintingByID)
 	r.POST("/api/paintings", createPainting)
+	r.PUT("/api/paintings/:id", updatePainting)
 	r.DELETE("/api/paintings/:id", deletePainting)
 
 	// Commissions
@@ -116,6 +117,40 @@ func createPainting(c *gin.Context) {
 
 	id, _ := result.LastInsertId()
 	c.JSON(http.StatusCreated, gin.H{"id": id, "message": "Painting created"})
+}
+
+func updatePainting(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid painting ID"})
+		return
+	}
+
+	var input struct {
+		Title       string `json:"title" binding:"required"`
+		Description string `json:"description"`
+		Style       string `json:"style" binding:"required"`
+		Medium      string `json:"medium"`
+		Size        string `json:"size"`
+	}
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	err = queries.UpdatePainting(c.Request.Context(), db.UpdatePaintingParams{
+		Title:       input.Title,
+		Description: sql.NullString{String: input.Description, Valid: input.Description != ""},
+		Style:       input.Style,
+		Medium:      sql.NullString{String: input.Medium, Valid: input.Medium != ""},
+		Size:        sql.NullString{String: input.Size, Valid: input.Size != ""},
+		ID:          int32(id),
+	})
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"message": "Painting updated"})
 }
 
 func deletePainting(c *gin.Context) {

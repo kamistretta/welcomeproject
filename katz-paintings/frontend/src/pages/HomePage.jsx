@@ -1,9 +1,22 @@
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import PaintingCard from '../components/PaintingCard'
-import { getFeaturedPaintings } from '../data/paintings'
 
 export default function HomePage() {
-  const featured = getFeaturedPaintings()
+  const [featured, setFeatured] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    fetch('/api/paintings/featured')
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to load featured paintings')
+        return res.json()
+      })
+      .then((data) => setFeatured(data || []))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false))
+  }, [])
 
   return (
     <div>
@@ -42,7 +55,20 @@ export default function HomePage() {
       <section className="mx-auto max-w-6xl px-4 py-16">
         <h2 className="text-2xl font-bold text-rainbow mb-8">Featured Work</h2>
 
-        {featured.length > 0 && (
+        {loading && (
+          <div className="flex items-center justify-center py-20">
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-neon-pink border-t-transparent" />
+            <span className="ml-3 text-ink-300">Loading paintings...</span>
+          </div>
+        )}
+
+        {error && (
+          <div role="alert" className="rounded-lg border border-red-500/50 bg-red-500/10 px-4 py-3">
+            <p className="text-sm font-medium text-red-400">{error}</p>
+          </div>
+        )}
+
+        {!loading && !error && featured.length > 0 && (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {featured.map((painting) => (
               <PaintingCard key={painting.ID} painting={painting} />
@@ -50,7 +76,7 @@ export default function HomePage() {
           </div>
         )}
 
-        {featured.length === 0 && (
+        {!loading && !error && featured.length === 0 && (
           <p className="text-center text-ink-400 py-12">Featured paintings coming soon.</p>
         )}
 

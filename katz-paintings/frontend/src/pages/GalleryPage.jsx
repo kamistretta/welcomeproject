@@ -1,13 +1,31 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PaintingCard from '../components/PaintingCard'
-import { getPaintingsByStyle } from '../data/paintings'
 
 const STYLES = ['All', 'Nature', 'Pop Art', 'Trippy', 'Graphic', 'Animal Portrait']
 
 export default function GalleryPage() {
   const [activeStyle, setActiveStyle] = useState('All')
+  const [paintings, setPaintings] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
 
-  const paintings = getPaintingsByStyle(activeStyle)
+  useEffect(() => {
+    setLoading(true)
+    setError('')
+
+    const url = activeStyle === 'All'
+      ? '/api/paintings'
+      : `/api/paintings?style=${encodeURIComponent(activeStyle)}`
+
+    fetch(url)
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to load paintings')
+        return res.json()
+      })
+      .then((data) => setPaintings(data || []))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false))
+  }, [activeStyle])
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
@@ -33,7 +51,20 @@ export default function GalleryPage() {
         ))}
       </div>
 
-      {paintings.length > 0 && (
+      {loading && (
+        <div className="flex items-center justify-center py-20">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-neon-pink border-t-transparent" />
+          <span className="ml-3 text-ink-300">Loading paintings...</span>
+        </div>
+      )}
+
+      {error && (
+        <div role="alert" className="rounded-lg border border-red-500/50 bg-red-500/10 px-4 py-3">
+          <p className="text-sm font-medium text-red-400">{error}</p>
+        </div>
+      )}
+
+      {!loading && !error && paintings.length > 0 && (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {paintings.map((painting) => (
             <PaintingCard key={painting.ID} painting={painting} />
@@ -41,7 +72,7 @@ export default function GalleryPage() {
         </div>
       )}
 
-      {paintings.length === 0 && (
+      {!loading && !error && paintings.length === 0 && (
         <p className="py-12 text-center text-ink-400">
           {activeStyle === 'All'
             ? 'No paintings in the gallery yet.'

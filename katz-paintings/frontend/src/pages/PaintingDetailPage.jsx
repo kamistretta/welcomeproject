@@ -126,8 +126,9 @@ export default function PaintingDetailPage() {
             /* Edit Form */
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-ink-300 mb-1">Title</label>
+                <label htmlFor="edit-title" className="block text-sm font-medium text-ink-300 mb-1">Title</label>
                 <input
+                  id="edit-title"
                   type="text"
                   value={editForm.title}
                   onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
@@ -135,8 +136,9 @@ export default function PaintingDetailPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-ink-300 mb-1">Description</label>
+                <label htmlFor="edit-description" className="block text-sm font-medium text-ink-300 mb-1">Description</label>
                 <textarea
+                  id="edit-description"
                   value={editForm.description}
                   onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
                   rows={3}
@@ -144,8 +146,9 @@ export default function PaintingDetailPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-ink-300 mb-1">Style</label>
+                <label htmlFor="edit-style" className="block text-sm font-medium text-ink-300 mb-1">Style</label>
                 <select
+                  id="edit-style"
                   value={editForm.style}
                   onChange={(e) => setEditForm({ ...editForm, style: e.target.value })}
                   className="w-full rounded-lg border border-ink-600 bg-ink-800 px-3 py-2 text-ink-50 focus:border-neon-cyan focus:outline-none"
@@ -156,8 +159,9 @@ export default function PaintingDetailPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-ink-300 mb-1">Medium</label>
+                <label htmlFor="edit-medium" className="block text-sm font-medium text-ink-300 mb-1">Medium</label>
                 <input
+                  id="edit-medium"
                   type="text"
                   value={editForm.medium}
                   onChange={(e) => setEditForm({ ...editForm, medium: e.target.value })}
@@ -165,8 +169,9 @@ export default function PaintingDetailPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-ink-300 mb-1">Size</label>
+                <label htmlFor="edit-size" className="block text-sm font-medium text-ink-300 mb-1">Size</label>
                 <input
+                  id="edit-size"
                   type="text"
                   value={editForm.size}
                   onChange={(e) => setEditForm({ ...editForm, size: e.target.value })}

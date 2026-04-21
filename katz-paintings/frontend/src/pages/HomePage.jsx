@@ -56,8 +56,8 @@ export default function HomePage() {
         <h2 className="text-2xl font-bold text-rainbow mb-8">Featured Work</h2>
 
         {loading && (
-          <div className="flex items-center justify-center py-20">
-            <div className="h-8 w-8 animate-spin rounded-full border-2 border-neon-pink border-t-transparent" />
+          <div role="status" aria-label="Loading paintings" className="flex items-center justify-center py-20">
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-neon-pink border-t-transparent" aria-hidden="true" />
             <span className="ml-3 text-ink-300">Loading paintings...</span>
           </div>
         )}

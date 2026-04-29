@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import ConfirmModal from '../components/ConfirmModal'
 
 const STYLES = ['Nature', 'Pop Art', 'Trippy', 'Graphic', 'Animal Portrait']
 
@@ -17,6 +18,7 @@ export default function PaintingDetailPage() {
   const [editForm, setEditForm] = useState({})
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
 
   useEffect(() => {
     fetch(`/api/paintings/${id}`)
@@ -67,7 +69,6 @@ export default function PaintingDetailPage() {
   }
 
   function handleDelete() {
-    if (!window.confirm('Are you sure you want to delete this painting?')) return
     setDeleting(true)
     fetch(`/api/paintings/${id}`, { method: 'DELETE' })
       .then((res) => {
@@ -75,8 +76,9 @@ export default function PaintingDetailPage() {
         navigate('/gallery')
       })
       .catch((err) => {
-        alert(err.message)
+        console.error(err.message)
         setDeleting(false)
+        setShowDeleteModal(false)
       })
   }
 
@@ -242,14 +244,23 @@ export default function PaintingDetailPage() {
                     Edit
                   </button>
                   <button
-                    onClick={handleDelete}
-                    disabled={deleting}
-                    className="rounded-lg border border-red-500/50 px-5 py-2 text-sm font-semibold text-red-400 transition-all hover:bg-red-500/10 disabled:opacity-50"
+                    onClick={() => setShowDeleteModal(true)}
+                    className="rounded-lg border border-red-500/50 px-5 py-2 text-sm font-semibold text-red-400 transition-all hover:bg-red-500/10"
                   >
-                    {deleting ? 'Deleting...' : 'Delete'}
+                    Delete
                   </button>
                 </div>
               )}
+
+              <ConfirmModal
+                isOpen={showDeleteModal}
+                title="Delete Painting"
+                message={`Are you sure you want to delete "${painting?.Title}"? This cannot be undone.`}
+                confirmLabel="Delete"
+                loading={deleting}
+                onConfirm={handleDelete}
+                onCancel={() => setShowDeleteModal(false)}
+              />
             </>
           )}
         </div>

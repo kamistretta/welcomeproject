@@ -51,8 +51,8 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > key.pem
           chmod 600 key.pem
 
-          # Deploy frontend static files
-          rsync -az --delete -e "ssh -i key.pem -o StrictHostKeyChecking=no" \
+          # Deploy frontend static files (exclude uploads so user-uploaded images are preserved)
+          rsync -az --delete --exclude uploads/ -e "ssh -i key.pem -o StrictHostKeyChecking=no" \
             frontend/dist/ \
             $SERVER_USER@$SERVER_IP:/var/www/html/
 

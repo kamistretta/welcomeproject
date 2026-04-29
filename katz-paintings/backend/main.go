@@ -2,9 +2,13 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"net/http"
+	"os"
+	"path/filepath"
 	"strconv"
+	"time"
 
 	"katz-paintings/db"
 
@@ -39,6 +43,9 @@ func main() {
 	r.GET("/health", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"status": "ok"})
 	})
+
+	// Image upload
+	r.POST("/api/upload", uploadImage)
 
 	// Paintings
 	r.GET("/api/paintings", getPaintings)
@@ -103,13 +110,29 @@ func getPaintingByID(c *gin.Context) {
 }
 
 func createPainting(c *gin.Context) {
-	var input db.CreatePaintingParams
+	var input struct {
+		Title       string `json:"title" binding:"required"`
+		Description string `json:"description"`
+		Style       string `json:"style" binding:"required"`
+		Medium      string `json:"medium"`
+		ImageUrl    string `json:"image_url" binding:"required"`
+		Size        string `json:"size"`
+		Featured    bool   `json:"featured"`
+	}
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	result, err := queries.CreatePainting(c.Request.Context(), input)
+	result, err := queries.CreatePainting(c.Request.Context(), db.CreatePaintingParams{
+		Title:       input.Title,
+		Description: sql.NullString{String: input.Description, Valid: input.Description != ""},
+		Style:       input.Style,
+		Medium:      sql.NullString{String: input.Medium, Valid: input.Medium != ""},
+		ImageUrl:    input.ImageUrl,
+		Size:        sql.NullString{String: input.Size, Valid: input.Size != ""},
+		Featured:    input.Featured,
+	})
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -117,6 +140,31 @@ func createPainting(c *gin.Context) {
 
 	id, _ := result.LastInsertId()
 	c.JSON(http.StatusCreated, gin.H{"id": id, "message": "Painting created"})
+}
+
+func uploadImage(c *gin.Context) {
+	file, err := c.FormFile("file")
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "No file provided"})
+		return
+	}
+
+	ext := filepath.Ext(file.Filename)
+	filename := fmt.Sprintf("%d%s", time.Now().UnixNano(), ext)
+	uploadDir := "/var/www/html/uploads"
+
+	if err := os.MkdirAll(uploadDir, 0755); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create upload directory"})
+		return
+	}
+
+	dst := filepath.Join(uploadDir, filename)
+	if err := c.SaveUploadedFile(file, dst); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to save file"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"url": "/uploads/" + filename})
 }
 
 func updatePainting(c *gin.Context) {

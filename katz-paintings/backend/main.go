@@ -16,11 +16,15 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-var queries *db.Queries
+var (
+	queries  *db.Queries
+	database *sql.DB
+)
 
 func main() {
 	// Connect to MySQL
-	database, err := sql.Open("mysql", "xc_app:xc_password@tcp(localhost:3306)/jones_county_xc?parseTime=true")
+	var err error
+	database, err = sql.Open("mysql", "xc_app:xc_password@tcp(localhost:3306)/jones_county_xc?parseTime=true")
 	if err != nil {
 		log.Fatal("Failed to connect to database:", err)
 	}
@@ -47,12 +51,16 @@ func main() {
 	// Image upload
 	r.POST("/api/upload", uploadImage)
 
+	// Admin stats
+	r.GET("/api/admin/stats", getAdminStats)
+
 	// Paintings
 	r.GET("/api/paintings", getPaintings)
 	r.GET("/api/paintings/featured", getFeaturedPaintings)
 	r.GET("/api/paintings/:id", getPaintingByID)
 	r.POST("/api/paintings", createPainting)
 	r.PUT("/api/paintings/:id", updatePainting)
+	r.PUT("/api/paintings/:id/featured", toggleFeatured)
 	r.DELETE("/api/paintings/:id", deletePainting)
 
 	// Commissions
@@ -140,6 +148,57 @@ func createPainting(c *gin.Context) {
 
 	id, _ := result.LastInsertId()
 	c.JSON(http.StatusCreated, gin.H{"id": id, "message": "Painting created"})
+}
+
+func toggleFeatured(c *gin.Context) {
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid painting ID"})
+		return
+	}
+
+	var input struct {
+		Featured bool `json:"featured"`
+	}
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if _, err := database.ExecContext(c.Request.Context(), "UPDATE paintings SET featured = ? WHERE id = ?", input.Featured, id); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"featured": input.Featured})
+}
+
+func getAdminStats(c *gin.Context) {
+	var paintingCount int
+	if err := database.QueryRowContext(c.Request.Context(), "SELECT COUNT(*) FROM paintings").Scan(&paintingCount); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	rows, err := database.QueryContext(c.Request.Context(), "SELECT COALESCE(status, 'new'), COUNT(*) FROM commission_requests GROUP BY status")
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	defer rows.Close()
+
+	statusCounts := map[string]int{"new": 0, "in-progress": 0, "completed": 0}
+	for rows.Next() {
+		var status string
+		var count int
+		if err := rows.Scan(&status, &count); err == nil {
+			statusCounts[status] = count
+		}
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"paintings":    paintingCount,
+		"commissions":  statusCounts,
+	})
 }
 
 func uploadImage(c *gin.Context) {

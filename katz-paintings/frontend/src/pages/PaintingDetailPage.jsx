@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import ConfirmModal from '../components/ConfirmModal'
+import ImageLightbox from '../components/ImageLightbox'
 
 const STYLES = ['Nature', 'Pop Art', 'Trippy', 'Graphic', 'Animal Portrait']
 
@@ -19,6 +20,8 @@ export default function PaintingDetailPage() {
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [togglingFeatured, setTogglingFeatured] = useState(false)
 
   useEffect(() => {
     fetch(`/api/paintings/${id}`)
@@ -68,6 +71,21 @@ export default function PaintingDetailPage() {
       .finally(() => setSaving(false))
   }
 
+  function handleToggleFeatured() {
+    setTogglingFeatured(true)
+    fetch(`/api/paintings/${id}/featured`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ featured: !painting.Featured }),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to update')
+        setPainting((prev) => ({ ...prev, Featured: !prev.Featured }))
+      })
+      .catch((err) => console.error(err.message))
+      .finally(() => setTogglingFeatured(false))
+  }
+
   function handleDelete() {
     setDeleting(true)
     fetch(`/api/paintings/${id}`, { method: 'DELETE' })
@@ -114,13 +132,23 @@ export default function PaintingDetailPage() {
 
       <div className="mt-4 grid gap-8 lg:grid-cols-2">
         {/* Image */}
-        <div className="overflow-hidden rounded-xl bg-ink-900 border border-ink-700">
+        <div
+          className="overflow-hidden rounded-xl bg-ink-900 border border-ink-700 cursor-zoom-in"
+          onClick={() => setLightboxOpen(true)}
+          title="Click to enlarge"
+        >
           <img
             src={painting.ImageUrl}
             alt={painting.Title}
             className="h-full w-full object-contain"
           />
         </div>
+        <ImageLightbox
+          src={painting.ImageUrl}
+          alt={painting.Title}
+          isOpen={lightboxOpen}
+          onClose={() => setLightboxOpen(false)}
+        />
 
         {/* Details */}
         <div className="flex flex-col justify-center">
@@ -236,12 +264,23 @@ export default function PaintingDetailPage() {
               </Link>
 
               {user && (
-                <div className="mt-6 flex gap-3 border-t border-ink-700 pt-6">
+                <div className="mt-6 flex flex-wrap gap-3 border-t border-ink-700 pt-6">
                   <button
                     onClick={startEditing}
                     className="rounded-lg border border-neon-cyan/50 px-5 py-2 text-sm font-semibold text-neon-cyan transition-all hover:bg-neon-cyan/10"
                   >
                     Edit
+                  </button>
+                  <button
+                    onClick={handleToggleFeatured}
+                    disabled={togglingFeatured}
+                    className={`rounded-lg border px-5 py-2 text-sm font-semibold transition-all disabled:opacity-50 ${
+                      painting.Featured
+                        ? 'border-neon-green/50 text-neon-green hover:bg-neon-green/10'
+                        : 'border-ink-600 text-ink-300 hover:bg-ink-700'
+                    }`}
+                  >
+                    {painting.Featured ? '★ Featured' : '☆ Set Featured'}
                   </button>
                   <button
                     onClick={() => setShowDeleteModal(true)}

@@ -44,6 +44,9 @@ export default function Navbar() {
             ))}
             {user && (
               <div className="ml-2 flex items-center gap-2 border-l border-ink-700/50 pl-3">
+                <NavLink to="/admin" end className={linkClass}>
+                  Dashboard
+                </NavLink>
                 <NavLink to="/admin/add-painting" className={linkClass}>
                   Add Painting
                 </NavLink>
@@ -101,6 +104,14 @@ export default function Navbar() {
             {user && (
               <>
                 <div className="mx-3 my-2 border-t border-ink-700/50" />
+                <NavLink
+                  to="/admin"
+                  end
+                  className={linkClass}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  Dashboard
+                </NavLink>
                 <NavLink
                   to="/admin/add-painting"
                   className={linkClass}

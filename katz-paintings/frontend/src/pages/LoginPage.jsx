@@ -17,7 +17,7 @@ export default function LoginPage() {
 
     if (username === 'KatMistretta' && password === 'deal!65N') {
       login(username)
-      navigate('/admin/commissions')
+      navigate('/admin')
     } else {
       setError('Invalid username or password.')
     }

@@ -2,11 +2,26 @@ import { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
+const STATUS_OPTIONS = ['new', 'in-progress', 'completed']
+
 export default function AdminCommissionsPage() {
   const { user } = useAuth()
   const [commissions, setCommissions] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+
+  function handleStatusChange(id, status) {
+    fetch(`/api/commissions/${id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status }),
+    }).then((res) => {
+      if (!res.ok) return
+      setCommissions((prev) =>
+        prev.map((c) => c.ID === id ? { ...c, Status: { String: status, Valid: true } } : c)
+      )
+    })
+  }
 
   useEffect(() => {
     if (!user) return
@@ -69,13 +84,19 @@ export default function AdminCommissionsPage() {
                   <span className="rounded-full bg-neon-pink/10 px-3 py-1 text-xs font-semibold text-neon-pink">
                     {c.Style}
                   </span>
-                  <span className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                    c.Status?.String === 'completed' ? 'bg-neon-green/10 text-neon-green' :
-                    c.Status?.String === 'in-progress' ? 'bg-neon-cyan/10 text-neon-cyan' :
-                    'bg-neon-orange/10 text-neon-orange'
-                  }`}>
-                    {c.Status?.String || 'new'}
-                  </span>
+                  <select
+                    value={c.Status?.String || 'new'}
+                    onChange={(e) => handleStatusChange(c.ID, e.target.value)}
+                    className={`rounded-full px-3 py-1 text-xs font-semibold border-0 cursor-pointer focus:outline-none focus:ring-2 focus:ring-neon-pink/50 ${
+                      c.Status?.String === 'completed' ? 'bg-neon-green/10 text-neon-green' :
+                      c.Status?.String === 'in-progress' ? 'bg-neon-cyan/10 text-neon-cyan' :
+                      'bg-neon-orange/10 text-neon-orange'
+                    }`}
+                  >
+                    {STATUS_OPTIONS.map((s) => (
+                      <option key={s} value={s} className="bg-ink-900 text-ink-50">{s}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
